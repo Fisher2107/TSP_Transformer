@@ -209,7 +209,7 @@ for epoch in tqdm(range(0,args.nb_epochs)):
         'time': time_one_epoch,
         'tot_time': time_tot,
         'loss': loss.item(),
-        'TSP_length': [torch.mean(L_train).item(), torch.mean(L_baseline).item(), mean_tour_length_test],
+        'TSP_length': [torch.mean(L_train).item(), torch.mean(L_baseline).item()],
         'plot_performance_train': plot_performance_train,
         'plot_performance_baseline': plot_performance_baseline,
         'model_baseline': model_baseline.state_dict(),
