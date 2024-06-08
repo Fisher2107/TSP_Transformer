@@ -40,10 +40,8 @@ class DotDict(dict):
         self.__dict__ = self
         
 args = DotDict()
-args.nb_nodes = 20 # TSP20
-args.nb_nodes = 50 # TSP50
 args.nb_nodes = 100 # TSP100
-args.bsz = 256 #512 TSP20 TSP50
+args.bsz = 512 #512 TSP20 TSP50
 args.dim_emb = 128
 args.dim_ff = 512
 args.dim_input_nodes = 2
@@ -51,7 +49,7 @@ args.nb_layers_encoder = 6
 args.nb_layers_decoder = 2
 args.nb_heads = 8
 args.nb_epochs = 10000
-args.nb_batch_per_epoch = 1500#2500
+args.nb_batch_per_epoch = 25#2500
 args.nb_batch_eval = 20
 args.gpu_id = gpu_id
 args.lr = 1e-4
