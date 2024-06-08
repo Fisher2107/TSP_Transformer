@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import time
 import argparse
+from tqdm import tqdm
 
 import os
 import datetime
@@ -118,7 +119,7 @@ tot_time_ckpt = 0
 torch.cuda.memory._record_memory_history()
 start_training_time = time.time()
 print('start train')
-for epoch in range(0,args.nb_epochs):
+for epoch in tqdm(range(0,args.nb_epochs)):
     
     # re-start training with saved checkpoint
     epoch += epoch_ckpt
@@ -128,8 +129,7 @@ for epoch in range(0,args.nb_epochs):
     ###################
     start = time.time()
     model_train.train() 
-
-    for step in range(1,args.nb_batch_per_epoch+1):    
+    for step in tqdm(range(1,args.nb_batch_per_epoch+1)):
 
         # generate a batch of random TSP instances    
         x = torch.rand(args.bsz, args.nb_nodes, args.dim_input_nodes, device=device) # size(x)=(bsz, nb_nodes, dim_input_nodes) 

@@ -12,10 +12,10 @@ setup(
         'matplotlib',
         'networkx',
         'scipy',
+        'ipython',
     ],
     extras_require={
         'dev': [
-            'ipython',
             'jupyter',
         ]
     },
