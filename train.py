@@ -49,7 +49,7 @@ args.nb_layers_encoder = 6
 args.nb_layers_decoder = 2
 args.nb_heads = 8
 args.nb_epochs = 10000
-args.nb_batch_per_epoch = 25#2500
+args.nb_batch_per_epoch = 250#2500
 args.nb_batch_eval = 20
 args.gpu_id = gpu_id
 args.lr = 1e-4
@@ -114,7 +114,6 @@ tot_time_ckpt = 0
 ###################
 # Main training loop 
 ###################
-torch.cuda.memory._record_memory_history()
 start_training_time = time.time()
 print('start train')
 for epoch in tqdm(range(0,args.nb_epochs)):
@@ -185,12 +184,7 @@ for epoch in tqdm(range(0,args.nb_epochs)):
     if update_baseline:
         model_baseline.load_state_dict( model_train.state_dict() )
 
-    # Compute TSPs for small test set
-    # Note : this can be removed
-    with torch.no_grad():
-        tour_baseline, _ = model_baseline(x_1000tsp, deterministic=True)
-    mean_tour_length_test = compute_tour_length(x_1000tsp, tour_baseline).mean().item()
-    
+
     # For checkpoint
     plot_performance_train.append([ (epoch+1), mean_tour_length_train])
     plot_performance_baseline.append([ (epoch+1), mean_tour_length_baseline])
@@ -202,7 +196,7 @@ for epoch in tqdm(range(0,args.nb_epochs)):
     
     # Print and save in txt file
     mystring_min = 'Epoch: {:d}, epoch time: {:.3f}min, tot time: {:.3f}day, L_train: {:.3f}, L_base: {:.3f}, L_test: {:.3f}, gap_train(%): {:.3f}, update: {}'.format(
-        epoch, time_one_epoch/60, time_tot/86400, mean_tour_length_train, mean_tour_length_baseline, mean_tour_length_test, 100*gap_train, update_baseline) 
+        epoch, time_one_epoch/60, time_tot/86400, mean_tour_length_train, mean_tour_length_baseline, 100*gap_train, update_baseline) 
     print(mystring_min) # Comment if plot display
     file.write(mystring_min+'\n')
     
@@ -218,10 +212,7 @@ for epoch in tqdm(range(0,args.nb_epochs)):
         'TSP_length': [torch.mean(L_train).item(), torch.mean(L_baseline).item(), mean_tour_length_test],
         'plot_performance_train': plot_performance_train,
         'plot_performance_baseline': plot_performance_baseline,
-        'mean_tour_length_test': mean_tour_length_test,
         'model_baseline': model_baseline.state_dict(),
         'model_train': model_train.state_dict(),
         'optimizer': optimizer.state_dict(),
         }, '{}.pkl'.format(checkpoint_dir + "/checkpoint_" + time_stamp + "-n{}".format(args.nb_nodes) + "-gpu{}".format(args.gpu_id)))
-
-torch.cuda.memory._dump_snapshot("memory.pickle")
