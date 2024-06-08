@@ -49,7 +49,7 @@ args.nb_layers_encoder = 6
 args.nb_layers_decoder = 2
 args.nb_heads = 8
 args.nb_epochs = 10000
-args.nb_batch_per_epoch = 250#2500
+args.nb_batch_per_epoch = 25#2500
 args.nb_batch_eval = 20
 args.gpu_id = gpu_id
 args.lr = 1e-4
@@ -195,7 +195,7 @@ for epoch in tqdm(range(0,args.nb_epochs)):
     else: gap_train = -1.0
     
     # Print and save in txt file
-    mystring_min = 'Epoch: {:d}, epoch time: {:.3f}min, tot time: {:.3f}day, L_train: {:.3f}, L_base: {:.3f}, L_test: {:.3f}, gap_train(%): {:.3f}, update: {}'.format(
+    mystring_min = 'Epoch: {:d}, epoch time: {:.3f}min, tot time: {:.3f}day, L_train: {:.3f}, L_base: {:.3f}, gap_train(%): {:.3f}, update: {}'.format(
         epoch, time_one_epoch/60, time_tot/86400, mean_tour_length_train, mean_tour_length_baseline, 100*gap_train, update_baseline) 
     print(mystring_min) # Comment if plot display
     file.write(mystring_min+'\n')
