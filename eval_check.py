@@ -12,3 +12,4 @@ print('time = ',checkpoint['time'], 'average = ', checkpoint['tot_time']/checkpo
 print('loss = ',checkpoint['loss'])
 print('TSP_length = ',checkpoint['TSP_length'])
 plt.plot([x[0] for x in checkpoint['plot_performance_train']], [x[1] for x in checkpoint['plot_performance_train']], label='train')
+plt.show()
